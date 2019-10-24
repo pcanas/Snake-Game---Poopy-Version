@@ -11,6 +11,7 @@ function setup (){
     stop = false;
     food.randomLocation();
     poop = Math.floor(Math.random() * (51) ) + 150;
+    score = 0;
 }
 
 function keyPressed(){
@@ -36,10 +37,12 @@ function keyPressed(){
 }
 
 function draw() {
-    
+
     background(51);
-    
-    
+
+    if (document.getElementById('score').innerHTML != snake.total)
+        document.getElementById('score').innerHTML = snake.total;
+
     if(!stop){
         document.getElementById('pauseLogo').style.display = "none";
         snake.update();
@@ -47,6 +50,9 @@ function draw() {
         snake.show();
         if (snake.eats(food)){
             snake.total ++;
+            if (snake.total > 9) {
+                document.getElementById('score').style.left = "530px";
+            }
             food.randomLocation();
         }
         food.show();
@@ -61,11 +67,11 @@ function draw() {
         }
         document.getElementById('pauseLogo').style.display = "block ";
     }
-    
+
     poop--;
     if (poop===0){
         poops [poops.length] = new myPoop (snake.futurePoopX, snake.futurePoopY);
         poop = Math.floor(Math.random() * (51) ) + 150;
     }
-     
+
 }
